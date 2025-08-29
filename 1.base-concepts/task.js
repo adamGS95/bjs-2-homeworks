@@ -26,30 +26,45 @@ testCase();
 //Задача 2
 
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
+	function convertToNumber(value) {
+		if (typeof value === 'string') {
+			const parsedValue = parseFloat(value.replace(',', '.'));
+			return isNaN(parsedValue) ? false : parsedValue;
+		} else if (typeof value === 'number') {
+			return value;
+		} else {
+			return false;
+		}
+	}
 
-	percent = Number(percent);
-	contribution = Number(contribution);
-	amount = Number(amount);
-	countMonths = Number(countMonths);
+	const percentNum = convertToNumber(percent);
+	const contributionNum = convertToNumber(contribution);
+	const amountNum = convertToNumber(amount);
+	const countMonthsNum = convertToNumber(countMonths);
 
-	
-	if (isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths)) {
+	if (percentNum === false || contributionNum === false || amountNum === false || countMonthsNum === false) {
 		return false;
 	}
 
-	let loanBody = amount - contribution;
+	const loanBody = amountNum - contributionNum;
 
 	if (loanBody <= 0) {
 		return 0;
 	}
 
-	let monthlyPercent = percent / 100 / 12;
+	const monthlyPercent = percentNum / 100 / 12;
 
-	let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (Math.pow(1 + monthlyPercent, countMonths) - 1)));
+	const monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (Math.pow(1 + monthlyPercent, countMonthsNum) - 1)));
 
-	let totalPayment = monthlyPayment * countMonths + contribution;
+	const totalAmount = monthlyPayment * countMonthsNum;
 
-	totalPayment = totalPayment.toFixed(2);
-
-	return Number(totalPayment);
+	return Number(totalAmount.toFixed(2));
 }
+
+console.log(calculateTotalMortgage(10, 0, 50000, 12)); // 52749.53
+console.log(calculateTotalMortgage(10, 1000, 50000, 12)); // 51694.54
+console.log(calculateTotalMortgage(10, 0, 20000, 24)); // 22149.56
+console.log(calculateTotalMortgage(10, 1000, 20000, 24)); // 21042.09
+console.log(calculateTotalMortgage(10, 20000, 20000, 24)); // 0
+console.log(calculateTotalMortgage(10, 0, 10000, 36)); // 11616.19
+console.log(calculateTotalMortgage(15, 0, 10000, 36)); // 12479.52
