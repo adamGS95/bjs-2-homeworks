@@ -1,7 +1,54 @@
 "use strict";
 
-function summElementsWorker(...arr) {
-	if (arr.length === 0) {
+function getArrayParams(...arr) {
+	let min = Infinity; // Минимальное значение
+	let max = -Infinity; // Максимальное значение
+	let sum = 0; // Сумма всех элементов
+
+	for (let i = 0; i < arr.length; i++) {
+		let num = arr[i];
+
+		// Проверяем максимум
+		if (num > max) {
+			max = num;
+		}
+
+		// Проверяем минимум
+		if (num < min) {
+			min = num;
+		}
+
+		// Добавляем к сумме
+		sum = sum + num;
+	}
+
+	// Среднее значение
+	let avg = sum / arr.length;
+
+	// Округляем до двух знаков
+	avg = Number(avg.toFixed(2));
+
+	return {
+		min: min,
+		max: max,
+		avg: avg
+	};
+}
+
+// Функция для проверки работы
+function testCase() {
+	console.log(getArrayParams(1, 2, 3, -1, 10));
+	// Ожидаем: { min: -1, max: 10, avg: 3 }
+}
+
+// Запускаем тест
+testCase();
+
+"use strict";
+
+// Функция суммирования элементов
+function summElementsWorker(arr) {
+	if (!arr || arr.length === 0) {
 		return 0;
 	}
 
@@ -14,8 +61,9 @@ function summElementsWorker(...arr) {
 	return sum;
 }
 
-function differenceMaxMinWorker(...arr) {
-	if (arr.length === 0) {
+// Функция разницы между max и min
+function differenceMaxMinWorker(arr) {
+	if (!arr || arr.length === 0) {
 		return 0;
 	}
 
@@ -37,13 +85,14 @@ function differenceMaxMinWorker(...arr) {
 	return max - min;
 }
 
-function differenceEvenOddWorker(...arr) {
-	if (arr.length === 0) {
+// Функция разницы суммы чётных и нечётных
+function differenceEvenOddWorker(arr) {
+	if (!arr || arr.length === 0) {
 		return 0;
 	}
 
-	let sumEvenElement = 0;
-	let sumOddElement = 0;
+	let sumEvenElement = 0; // сумма чётных
+	let sumOddElement = 0; // сумма нечётных
 
 	for (let i = 0; i < arr.length; i++) {
 		let num = arr[i];
@@ -58,13 +107,14 @@ function differenceEvenOddWorker(...arr) {
 	return sumEvenElement - sumOddElement;
 }
 
-function averageEvenElementsWorker(...arr) {
-	if (arr.length === 0) {
+// Функция среднего значения чётных элементов
+function averageEvenElementsWorker(arr) {
+	if (!arr || arr.length === 0) {
 		return 0;
 	}
 
-	let sumEvenElement = 0;
-	let countEvenElement = 0;
+	let sumEvenElement = 0; // сумма чётных
+	let countEvenElement = 0; // количество чётных
 
 	for (let i = 0; i < arr.length; i++) {
 		let num = arr[i];
@@ -76,24 +126,26 @@ function averageEvenElementsWorker(...arr) {
 	}
 
 	if (countEvenElement === 0) {
-		return 0; 
+		return 0; // если чётных нет
 	}
 
 	return sumEvenElement / countEvenElement;
 }
 
+// Проверка
 function testCase() {
-	console.log(summElementsWorker());
-	console.log(summElementsWorker(10, 10, 11, 20, 10));
+	console.log(summElementsWorker([]));
+	console.log(summElementsWorker([10, 10, 11, 20, 10]));
 
-	console.log(differenceMaxMinWorker());
-	console.log(differenceMaxMinWorker(10, 10, 11, 20, 10));
+	console.log(differenceMaxMinWorker([]));
+	console.log(differenceMaxMinWorker([10, 10, 11, 20, 10]));
 
-	console.log(differenceEvenOddWorker(94, 51, 57, 41, 47, 66, 58, 10, 38, 17));
-	console.log(differenceEvenOddWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35));
+	console.log(differenceEvenOddWorker([94, 51, 57, 41, 47, 66, 58, 10, 38, 17]));
+	console.log(differenceEvenOddWorker([15, 97, 85, 64, 67, 10, 69, 40, 15, 35]));
 
-	console.log(averageEvenElementsWorker(1, 2, 3, 4, 5, 6, 7, 8, 9));
-	console.log(averageEvenElementsWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35));
+	console.log(averageEvenElementsWorker([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+	console.log(averageEvenElementsWorker([15, 97, 85, 64, 67, 10, 69, 40, 15, 35]));
 }
 
 testCase();
+
