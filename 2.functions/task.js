@@ -1,9 +1,26 @@
 "use strict";
 
-function getArrayParams(...arr) {
+function summElementsWorker(...arr) {
+	if (arr.length === 0) {
+		return 0;
+	}
+
+	let sum = 0;
+
+	for (let i = 0; i < arr.length; i++) {
+		sum = sum + arr[i];
+	}
+
+	return sum;
+}
+
+function differenceMaxMinWorker(...arr) {
+	if (arr.length === 0) {
+		return 0;
+	}
+
 	let min = Infinity;
 	let max = -Infinity;
-	let sum = 0;
 
 	for (let i = 0; i < arr.length; i++) {
 		let num = arr[i];
@@ -15,31 +32,68 @@ function getArrayParams(...arr) {
 		if (num < min) {
 			min = num;
 		}
-
-		sum = sum + num;
 	}
 
-	let avg = sum / arr.length;
-
-	avg = Number(avg.toFixed(2));
-
-	return {
-		min: min,
-		max: max,
-		avg: avg
-	};
+	return max - min;
 }
 
-// Функция для проверки работы
+function differenceEvenOddWorker(...arr) {
+	if (arr.length === 0) {
+		return 0;
+	}
+
+	let sumEvenElement = 0;
+	let sumOddElement = 0;
+
+	for (let i = 0; i < arr.length; i++) {
+		let num = arr[i];
+
+		if (num % 2 === 0) {
+			sumEvenElement = sumEvenElement + num;
+		} else {
+			sumOddElement = sumOddElement + num;
+		}
+	}
+
+	return sumEvenElement - sumOddElement;
+}
+
+function averageEvenElementsWorker(...arr) {
+	if (arr.length === 0) {
+		return 0;
+	}
+
+	let sumEvenElement = 0;
+	let countEvenElement = 0;
+
+	for (let i = 0; i < arr.length; i++) {
+		let num = arr[i];
+
+		if (num % 2 === 0) {
+			sumEvenElement = sumEvenElement + num;
+			countEvenElement = countEvenElement + 1;
+		}
+	}
+
+	if (countEvenElement === 0) {
+		return 0; 
+	}
+
+	return sumEvenElement / countEvenElement;
+}
+
 function testCase() {
-	console.log(getArrayParams(-99, 99, 10));
-	// Ожидаем: { min: -99, max: 99, avg: 3.33 }
+	console.log(summElementsWorker());
+	console.log(summElementsWorker(10, 10, 11, 20, 10));
 
-	console.log(getArrayParams(1, 2, 3, -100, 10));
-	// Ожидаем: { min: -100, max: 10, avg: -16.80 }
+	console.log(differenceMaxMinWorker());
+	console.log(differenceMaxMinWorker(10, 10, 11, 20, 10));
 
-	console.log(getArrayParams(5));
-	// Ожидаем: { min: 5, max: 5, avg: 5 }
+	console.log(differenceEvenOddWorker(94, 51, 57, 41, 47, 66, 58, 10, 38, 17));
+	console.log(differenceEvenOddWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35));
+
+	console.log(averageEvenElementsWorker(1, 2, 3, 4, 5, 6, 7, 8, 9));
+	console.log(averageEvenElementsWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35));
 }
 
 testCase();
