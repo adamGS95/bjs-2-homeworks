@@ -85,7 +85,6 @@ function differenceMaxMinWorker(arr) {
 	return max - min;
 }
 
-// Функция разницы суммы чётных и нечётных
 function differenceEvenOddWorker(arr) {
 	if (!arr || arr.length === 0) {
 		return 0;
@@ -107,7 +106,6 @@ function differenceEvenOddWorker(arr) {
 	return sumEvenElement - sumOddElement;
 }
 
-// Функция среднего значения чётных элементов
 function averageEvenElementsWorker(arr) {
 	if (!arr || arr.length === 0) {
 		return 0;
@@ -149,3 +147,31 @@ function testCase() {
 
 testCase();
 
+"use strict";
+
+function makeWork(arrOfArr, func) {
+	let maxWorkerResult = -Infinity;
+
+	for (let i = 0; i < arrOfArr.length; i++) {
+		const arr = arrOfArr[i];
+		const result = func(arr);
+
+		if (result > maxWorkerResult) {
+			maxWorkerResult = result;
+		}
+	}
+
+	return maxWorkerResult;
+}
+
+const arr = [
+	[10, 10, 11, 20, 10],
+	[67, 10, 2, 39, 88],
+	[72, 75, 51, 87, 43],
+	[30, 41, 55, 96, 62]
+];
+
+console.log(makeWork(arr, summElementsWorker)); // 328
+console.log(makeWork(arr, differenceMaxMinWorker)); // 86
+console.log(makeWork(arr, differenceEvenOddWorker)); // 92
+console.log(makeWork(arr, averageEvenElementsWorker)); // 72
