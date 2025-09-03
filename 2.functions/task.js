@@ -1,14 +1,6 @@
 "use strict";
 
-function getArrayParams(arr) {
-	if (!arr || arr.length === 0) {
-		return {
-			min: 0,
-			max: 0,
-			avg: 0
-		};
-	}
-
+function getArrayParams(...arr) {
 	let min = Infinity;
 	let max = -Infinity;
 	let sum = 0;
@@ -28,6 +20,7 @@ function getArrayParams(arr) {
 	}
 
 	let avg = sum / arr.length;
+
 	avg = Number(avg.toFixed(2));
 
 	return {
@@ -37,16 +30,16 @@ function getArrayParams(arr) {
 	};
 }
 
-// Проверка
+// Функция для проверки работы
 function testCase() {
-	console.log(getArrayParams([-99, 99, 10]));
-	// { min: -99, max: 99, avg: 3.33 }
+	console.log(getArrayParams(-99, 99, 10));
+	// Ожидаем: { min: -99, max: 99, avg: 3.33 }
 
-	console.log(getArrayParams([1, 2, 3, -100, 10]));
-	// { min: -100, max: 10, avg: -16.80 }
+	console.log(getArrayParams(1, 2, 3, -100, 10));
+	// Ожидаем: { min: -100, max: 10, avg: -16.80 }
 
-	console.log(getArrayParams([5]));
-	// { min: 5, max: 5, avg: 5 }
+	console.log(getArrayParams(5));
+	// Ожидаем: { min: 5, max: 5, avg: 5 }
 }
 
 testCase();
